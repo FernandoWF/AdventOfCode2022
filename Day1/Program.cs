@@ -1,9 +1,4 @@
-﻿using Day1;
+﻿using Common;
+using Day1;
 
-Console.WriteLine("========== Part 1 ==========");
-Part1.Run();
-
-Console.WriteLine();
-
-Console.WriteLine("========== Part 2 ==========");
-Part2.Run();
+DayRunner<Part1, Part2>.Run();
