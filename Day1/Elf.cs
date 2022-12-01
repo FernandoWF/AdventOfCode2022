@@ -3,6 +3,6 @@
     internal class Elf
     {
         public List<Food> CarriedFood { get; } = new List<Food>();
-        public int CaloriesCount => CarriedFood.Sum(f => f.Calories);
+        public int CalorieCount => CarriedFood.Sum(f => f.Calories);
     }
 }

@@ -25,7 +25,7 @@ namespace Day1
             }
             elves.Add(elf);
 
-            Console.WriteLine(elves.Max(e => e.CaloriesCount));
+            Console.WriteLine(elves.Max(e => e.CalorieCount));
         }
     }
 }
