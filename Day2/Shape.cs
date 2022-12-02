@@ -14,6 +14,7 @@ namespace Day2
         public char YourSymbol { get; }
         public int Score { get; }
         public Shape ShapeToWinAgainst { get; private set; } = null!;
+        public Shape ShapeToLoseAgainst { get; private set; } = null!;
 
         static Shape()
         {
@@ -24,8 +25,13 @@ namespace Day2
                 .ToHashSet();
 
             Rock.ShapeToWinAgainst = Paper;
+            Rock.ShapeToLoseAgainst = Scissors;
+
             Paper.ShapeToWinAgainst = Scissors;
+            Paper.ShapeToLoseAgainst = Rock;
+
             Scissors.ShapeToWinAgainst = Rock;
+            Scissors.ShapeToLoseAgainst = Paper;
         }
 
         private Shape(char opponentSymbol, char yourSymbol, int score)

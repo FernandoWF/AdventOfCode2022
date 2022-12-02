@@ -28,5 +28,18 @@
             YourShape = yourShape;
             Outcome = Shape.CalculateOutcome(opponentShape, yourShape);
         }
+
+        public Round(Shape opponentShape, Outcome desiredOutcome)
+        {
+            OpponentShape = opponentShape;
+            YourShape = desiredOutcome switch
+            {
+                Outcome.YouWin => opponentShape.ShapeToWinAgainst,
+                Outcome.YouLose => opponentShape.ShapeToLoseAgainst,
+                Outcome.Draw => opponentShape,
+                _ => throw new Exception($"{Outcome} is not a valid outcome")
+            };
+            Outcome = Shape.CalculateOutcome(opponentShape, YourShape);
+        }
     }
 }
