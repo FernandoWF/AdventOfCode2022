@@ -12,10 +12,10 @@ namespace Day4
             foreach (var line in lines)
             {
                 (var rawFirstAssignment, var rawSecondAssignment) = SeparateRawAssignments(line);
-                var fistAssignment = ParseAssignment(rawFirstAssignment);
+                var firstAssignment = ParseAssignment(rawFirstAssignment);
                 var secondAssignment = ParseAssignment(rawSecondAssignment);
 
-                if (fistAssignment.FullyContains(secondAssignment) || secondAssignment.FullyContains(fistAssignment))
+                if (firstAssignment.FullyContains(secondAssignment) || secondAssignment.FullyContains(firstAssignment))
                 {
                     pairsWithOneFullyContainedAssignment++;
                 }

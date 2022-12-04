@@ -15,5 +15,18 @@
         {
             return StartingSection <= other.StartingSection && EndingSection >= other.EndingSection;
         }
+
+        public bool Overlaps(Assignment other)
+        {
+            return FullyContains(other)
+                || other.FullyContains(this)
+                || (StartingSection <= other.StartingSection && EndingSection >= other.StartingSection)
+                || (StartingSection <= other.EndingSection && EndingSection >= other.EndingSection);
+        }
+
+        public override string ToString()
+        {
+            return $"{StartingSection}-{EndingSection}";
+        }
     }
 }
