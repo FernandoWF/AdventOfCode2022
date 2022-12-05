@@ -31,7 +31,7 @@ namespace Day5
             Console.WriteLine();
         }
 
-        private static int GetIndexOfFirstEmptyLine(IList<string> lines)
+        public static int GetIndexOfFirstEmptyLine(IList<string> lines)
         {
             var index = 0;
             while (index < lines.Count)
@@ -47,7 +47,7 @@ namespace Day5
             return -1;
         }
 
-        private static List<Stack<Crate>> ParseCrateStacks(IList<string> lines)
+        public static IList<Stack<Crate>> ParseCrateStacks(IList<string> lines)
         {
             lines = lines
                 .Select(l => $"{l} ")
@@ -80,7 +80,7 @@ namespace Day5
             return stacks;
         }
 
-        private static List<RearrangementStep> ParseRearrangementSteps(IList<string> lines)
+        public static IList<RearrangementStep> ParseRearrangementSteps(IList<string> lines)
         {
             // move XX from XX to XX
 
