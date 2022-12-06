@@ -6,7 +6,11 @@ namespace Day6
     {
         public static void Run()
         {
+            var datastreamBuffer = File.ReadAllText("Input.txt");
+            var startOfMessageMarkerLenght = 14;
+            var positionOfMarkerEnd = Part1.GetPositionOfMarkerEnd(datastreamBuffer, startOfMessageMarkerLenght);
 
+            Console.WriteLine(positionOfMarkerEnd);
         }
     }
 }

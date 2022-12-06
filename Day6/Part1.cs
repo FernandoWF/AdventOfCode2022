@@ -7,22 +7,29 @@ namespace Day6
         public static void Run()
         {
             var datastreamBuffer = File.ReadAllText("Input.txt");
-            var startOfMessageMarkerLenght = 4;
+            var startOfPacketMarkerLenght = 4;
+            var positionOfMarkerEnd = GetPositionOfMarkerEnd(datastreamBuffer, startOfPacketMarkerLenght);
 
-            for (var i = startOfMessageMarkerLenght - 1; i < datastreamBuffer.Length; i++)
+            Console.WriteLine(positionOfMarkerEnd);
+        }
+
+        public static int GetPositionOfMarkerEnd(string datastreamBuffer, int markerLength)
+        {
+            for (var i = markerLength - 1; i < datastreamBuffer.Length; i++)
             {
                 var set = new HashSet<char>();
-                for (var j = startOfMessageMarkerLenght - 1; j >= 0; j--)
+                for (var j = markerLength - 1; j >= 0; j--)
                 {
                     set.Add(datastreamBuffer[i - j]);
                 }
 
-                if (set.Count == startOfMessageMarkerLenght)
+                if (set.Count == markerLength)
                 {
-                    Console.WriteLine(i + 1);
-                    return;
+                    return i + 1;
                 }
             }
+
+            return -1;
         }
     }
 }
