@@ -14,7 +14,7 @@ namespace Day7
             Console.WriteLine(subdirectories.Sum(d => d.Size));
         }
 
-        private static Directory ParseLines(string[] lines)
+        public static Directory ParseLines(string[] lines)
         {
             var rootDirectory = new Directory();
             var currentDirectory = rootDirectory;
@@ -62,7 +62,7 @@ namespace Day7
             return rootDirectory;
         }
 
-        private static Command ParseCommand(string line)
+        public static Command ParseCommand(string line)
         {
             var secondSpaceIndex = line.IndexOf(' ', "$ ".Length);
             int nameEndIndex;
