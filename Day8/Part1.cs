@@ -21,7 +21,7 @@ namespace Day8
             Console.WriteLine(visibleTrees);
         }
 
-        private static Map ParseMap(string[] lines)
+        public static Map ParseMap(string[] lines)
         {
             var width = lines.First().Length;
             var height = lines.Length;
