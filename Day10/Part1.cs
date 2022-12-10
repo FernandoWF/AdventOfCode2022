@@ -7,6 +7,27 @@ namespace Day10
         public static void Run()
         {
             var lines = File.ReadAllLines("Input.txt");
+            var cpu = ParseCPU(lines);
+
+            var cyclesToSumSignalStrength = new[] { 20, 60, 100, 140, 180, 220 };
+            var signalStrengthSum = 0;
+
+            while (cpu.HasCommands)
+            {
+                cpu.ExecuteCycle();
+
+                if (cyclesToSumSignalStrength.Contains(cpu.LastCycleExecuted))
+                {
+                    var signalStrength = cpu.LastCycleExecuted * cpu.RegisterValueDuringLastCycle;
+                    signalStrengthSum += signalStrength;
+                }
+            }
+
+            Console.WriteLine(signalStrengthSum);
+        }
+
+        public static CPU ParseCPU(string[] lines)
+        {
             var cpu = new CPU();
 
             foreach (var line in lines)
@@ -24,21 +45,7 @@ namespace Day10
                 }
             }
 
-            var cyclesToSumSignalStrength = new[] { 20, 60, 100, 140, 180, 220 };
-            var signalStrengthSum = 0;
-
-            while (cpu.HasCommands)
-            {
-                cpu.ExecuteCycle();
-
-                if (cyclesToSumSignalStrength.Contains(cpu.LastCycleExecuted))
-                {
-                    var signalStrength = cpu.LastCycleExecuted * cpu.RegisterValueDuringLastCycle;
-                    signalStrengthSum += signalStrength;
-                }
-            }
-
-            Console.WriteLine(signalStrengthSum);
+            return cpu;
         }
     }
 }
