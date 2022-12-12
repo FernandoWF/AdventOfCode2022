@@ -32,7 +32,7 @@ namespace Day12
 
         public static IReadOnlyList<Square> FindShortestPath(Square startSquare, Square endSquare)
         {
-            var squareToPreviousSquare = new Dictionary<Square, Square>();
+            var previousSquareFromCurrentSquare = new Dictionary<Square, Square>();
             var queue = new Queue<Square>();
             queue.Enqueue(startSquare);
 
@@ -41,41 +41,46 @@ namespace Day12
                 var square = queue.Dequeue();
 
                 var topSquare = square.GetTopSquare()!;
-                if (square.CanTravelToTopSquare() && !squareToPreviousSquare.ContainsKey(topSquare))
+                if (square.CanTravelToTopSquare() && !previousSquareFromCurrentSquare.ContainsKey(topSquare))
                 {
-                    squareToPreviousSquare[topSquare] = square;
+                    previousSquareFromCurrentSquare[topSquare] = square;
                     queue.Enqueue(topSquare);
                 }
 
                 var bottomSquare = square.GetBottomSquare()!;
-                if (square.CanTravelToBottomSquare() && !squareToPreviousSquare.ContainsKey(bottomSquare))
+                if (square.CanTravelToBottomSquare() && !previousSquareFromCurrentSquare.ContainsKey(bottomSquare))
                 {
-                    squareToPreviousSquare[bottomSquare] = square;
+                    previousSquareFromCurrentSquare[bottomSquare] = square;
                     queue.Enqueue(bottomSquare);
                 }
 
                 var leftSquare = square.GetLeftSquare()!;
-                if (square.CanTravelToLeftSquare() && !squareToPreviousSquare.ContainsKey(leftSquare))
+                if (square.CanTravelToLeftSquare() && !previousSquareFromCurrentSquare.ContainsKey(leftSquare))
                 {
-                    squareToPreviousSquare[leftSquare] = square;
+                    previousSquareFromCurrentSquare[leftSquare] = square;
                     queue.Enqueue(leftSquare);
                 }
 
                 var rightSquare = square.GetRightSquare()!;
-                if (square.CanTravelToRightSquare() && !squareToPreviousSquare.ContainsKey(rightSquare))
+                if (square.CanTravelToRightSquare() && !previousSquareFromCurrentSquare.ContainsKey(rightSquare))
                 {
-                    squareToPreviousSquare[rightSquare] = square;
+                    previousSquareFromCurrentSquare[rightSquare] = square;
                     queue.Enqueue(rightSquare);
                 }
             }
 
             var path = new List<Square>();
-            var currentSquare = endSquare;
+            var pathExists = previousSquareFromCurrentSquare.ContainsKey(endSquare);
+            if (!pathExists)
+            {
+                return path;
+            }
 
+            var currentSquare = endSquare;
             while (currentSquare != startSquare)
             {
                 path.Add(currentSquare);
-                currentSquare = squareToPreviousSquare[currentSquare];
+                currentSquare = previousSquareFromCurrentSquare[currentSquare];
             };
 
             path.Reverse();

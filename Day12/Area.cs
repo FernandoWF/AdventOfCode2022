@@ -4,12 +4,18 @@ namespace Day12
 {
     internal class Area
     {
+        private const int MinimumHeight = 'a' - 'a';
+        private const int MaximumHeight = 'z' - 'a';
+
         private readonly Dictionary<Point, Square> squares = new();
 
         public int Width { get; }
         public int Height { get; }
         public Square Start { get; private set; } = null!;
         public Square End { get; private set; } = null!;
+        public IReadOnlyCollection<Square> SquaresWithMinimumHeight => squares.Values
+            .Where(s => s.Height == MinimumHeight)
+            .ToList();
 
         public Area(int width, int height)
         {
@@ -36,8 +42,8 @@ namespace Day12
 
             var height = letter switch
             {
-                'S' => 'a' - 'a',
-                'E' => 'z' - 'a',
+                'S' => MinimumHeight,
+                'E' => MaximumHeight,
                 _ => letter - 'a'
             };
 
