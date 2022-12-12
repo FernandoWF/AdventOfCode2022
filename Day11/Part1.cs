@@ -4,25 +4,31 @@ namespace Day11
 {
     internal class Part1 : ISolution
     {
+        public const int MonkeyDescriptionLineCount = 6;
+        public const int ItemsLineOffset = 1;
+        public const int OperationParametersLineOffset = 2;
+        public const int TestDivisorLineOffset = 3;
+        public const int MonkeyToThrowIfTrueLineOffset = 4;
+        public const int MonkeyToThrowIfFalseLineOffset = 5;
+
         public static void Run()
         {
             var lines = File.ReadAllLines("Input.txt");
-            var monkeyDescriptionLineCount = 6;
             var monkeys = new List<Monkey>();
 
-            for (var i = 0; i < lines.Length; i += monkeyDescriptionLineCount + 1)
+            for (var i = 0; i < lines.Length; i += MonkeyDescriptionLineCount + 1)
             {
-                var itemsLine = lines[i + 1];
-                var operationLine = lines[i + 2];
-                var testLine = lines[i + 3];
-                var trueLine = lines[i + 4];
-                var falseLine = lines[i + 5];
+                var items = ParseItems(lines[i + ItemsLineOffset]);
+                var operationParameters = ParseOperationParameters(lines[i + OperationParametersLineOffset]);
+                var testDivisor = ParseTestDivisor(lines[i + TestDivisorLineOffset]);
+                var monkeyToThrowIfTrue = ParseMonkeyToThrowIfTrue(lines[i + MonkeyToThrowIfTrueLineOffset]);
+                var monkeyToThrowIfFalse = ParseMonkeyToThrowIfFalse(lines[i + MonkeyToThrowIfFalseLineOffset]);
 
-                monkeys.Add(ParseMonkey(itemsLine, operationLine, testLine, trueLine, falseLine));
+                var monkey = new Monkey(items, operationParameters, testDivisor, monkeyToThrowIfTrue, monkeyToThrowIfFalse);
+                monkeys.Add(monkey);
             }
 
             var roundCount = 20;
-
             for (var i = 0; i < roundCount; i++)
             {
                 foreach (var monkey in monkeys)
@@ -40,32 +46,37 @@ namespace Day11
             Console.WriteLine(monkeyBusiness);
         }
 
-        public static Monkey ParseMonkey(
-            string itemsLine,
-            string operationLine,
-            string testLine,
-            string trueLine,
-            string falseLine)
+        public static int[] ParseItems(string itemsLine)
         {
             var itemsValuesStartPosition = itemsLine.IndexOf("Starting items: ") + "Starting items: ".Length;
-            var items = itemsLine[itemsValuesStartPosition..]
+            return itemsLine[itemsValuesStartPosition..]
                 .Split(", ")
                 .Select(int.Parse)
                 .ToArray();
+        }
 
+        public static string ParseOperationParameters(string operationLine)
+        {
             var operationParametersStartPosition = operationLine.IndexOf("Operation: new = old ") + "Operation: new = old ".Length;
-            var operationParameters = operationLine[operationParametersStartPosition..];
+            return operationLine[operationParametersStartPosition..];
+        }
 
+        public static int ParseTestDivisor(string testLine)
+        {
             var testDivisorStartPosition = testLine.IndexOf("Test: divisible by ") + "Test: divisible by ".Length;
-            var testDivisor = int.Parse(testLine[testDivisorStartPosition..]);
+            return int.Parse(testLine[testDivisorStartPosition..]);
+        }
 
+        public static int ParseMonkeyToThrowIfTrue(string trueLine)
+        {
             var monkeyToThrowIfTrueStartPosition = trueLine.LastIndexOf(' ') + 1;
-            var monkeyToThrowIfTrue = int.Parse(trueLine[monkeyToThrowIfTrueStartPosition..]);
+            return int.Parse(trueLine[monkeyToThrowIfTrueStartPosition..]);
+        }
 
+        public static int ParseMonkeyToThrowIfFalse(string falseLine)
+        {
             var monkeyToThrowIfFalseStartPosition = falseLine.LastIndexOf(' ') + 1;
-            var monkeyToThrowIfFalse = int.Parse(falseLine[monkeyToThrowIfTrueStartPosition..]);
-
-            return new Monkey(items, operationParameters, testDivisor, monkeyToThrowIfTrue, monkeyToThrowIfFalse);
+            return int.Parse(falseLine[monkeyToThrowIfFalseStartPosition..]);
         }
     }
 }

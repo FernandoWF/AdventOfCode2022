@@ -2,10 +2,10 @@
 {
     internal class Monkey
     {
-        private const float WorryLevelDecreaseFactor = 3f;
+        private const int DecreaseByReliefFactor = 3;
 
         private readonly Queue<int> items = new();
-        private readonly Func<int, int> worryLevelIncreaseOperation;
+        private readonly Func<long, long> worryLevelIncreaseOperation;
         private readonly int testDivisor;
         private readonly int monkeyToThrowIfTrue;
         private readonly int monkeyToThrowIfFalse;
@@ -26,13 +26,13 @@
             {
                 worryLevelIncreaseOperation = value == "old"
                     ? (w => w + w)
-                    : (w => w + int.Parse(value));
+                    : (w => w + long.Parse(value));
             }
             else if (@operator == "*")
             {
                 worryLevelIncreaseOperation = value == "old"
                     ? (w => w * w)
-                    : (w => w * int.Parse(value));
+                    : (w => w * long.Parse(value));
             }
             else
             {
@@ -49,8 +49,8 @@
             while (items.Any())
             {
                 var item = items.Dequeue();
-                var newWorryLevel = worryLevelIncreaseOperation(item);
-                newWorryLevel = (int)(newWorryLevel / WorryLevelDecreaseFactor);
+                var increasedWorryLevel = worryLevelIncreaseOperation(item);
+                var newWorryLevel = DecreaseWorryLevel(increasedWorryLevel);
                 ItemsInspected++;
 
                 var monkeyToThrow = newWorryLevel % testDivisor == 0
@@ -64,6 +64,11 @@
         public void EnqueueItem(int worryLevel)
         {
             items.Enqueue(worryLevel);
+        }
+
+        protected virtual int DecreaseWorryLevel(long worryLevel)
+        {
+            return (int)(worryLevel / DecreaseByReliefFactor);
         }
     }
 }
