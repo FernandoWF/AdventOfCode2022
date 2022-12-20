@@ -16,7 +16,7 @@ namespace Day13
 
                 var pairIndex = i / 3 + 1;
 
-                if (ArePairsInRightOrder(leftPacket, rightPacket))
+                if (ArePacketsInRightOrder(leftPacket, rightPacket))
                 {
                     rightOrderPairIndicesSum += pairIndex;
                 }
@@ -25,13 +25,13 @@ namespace Day13
             Console.WriteLine(rightOrderPairIndicesSum);
         }
 
-        private static bool ArePairsInRightOrder(Packet leftPacket, Packet rightPacket)
+        public static bool ArePacketsInRightOrder(Packet leftPacket, Packet rightPacket)
         {
-            return AreInTheRightOrder(leftPacket, rightPacket)
-                ?? throw new ArgumentException("Cannot decide if specified pairs are in right order");
+            return AreInRightOrder(leftPacket, rightPacket)
+                ?? throw new ArgumentException("Cannot decide if specified packets are in right order");
         }
 
-        private static bool? AreInTheRightOrder(Integer left, Integer right)
+        private static bool? AreInRightOrder(Integer left, Integer right)
         {
             if (left.Value < right.Value) { return true; }
             else if (left.Value > right.Value) { return false; }
@@ -39,7 +39,7 @@ namespace Day13
             return null;
         }
 
-        private static bool? AreInTheRightOrder(List left, List right)
+        private static bool? AreInRightOrder(List left, List right)
         {
             for (var i = 0; i <= left.Count; i++)
             {
@@ -58,7 +58,7 @@ namespace Day13
                     var leftInteger = (Integer)leftValue;
                     var rightInteger = (Integer)rightValue;
 
-                    var result = AreInTheRightOrder(leftInteger, rightInteger);
+                    var result = AreInRightOrder(leftInteger, rightInteger);
                     if (result != null) { return result.Value; }
                 }
                 else if (leftValue is Integer && rightValue is List)
@@ -66,7 +66,7 @@ namespace Day13
                     var leftList = new List($"[{(Integer)leftValue}]", 0);
                     var rightList = (List)rightValue;
 
-                    var result = AreInTheRightOrder(leftList, rightList);
+                    var result = AreInRightOrder(leftList, rightList);
                     if (result != null) { return result.Value; }
                 }
                 else if (leftValue is List && rightValue is Integer)
@@ -74,7 +74,7 @@ namespace Day13
                     var leftList = (List)leftValue;
                     var rightList = new List($"[{(Integer)rightValue}]", 0);
 
-                    var result = AreInTheRightOrder(leftList, rightList);
+                    var result = AreInRightOrder(leftList, rightList);
                     if (result != null) { return result.Value; }
                 }
                 else
@@ -82,7 +82,7 @@ namespace Day13
                     var leftList = (List)leftValue;
                     var rightList = (List)rightValue;
 
-                    var result = AreInTheRightOrder(leftList, rightList);
+                    var result = AreInRightOrder(leftList, rightList);
                     if (result != null) { return result.Value; }
                 }
             }
