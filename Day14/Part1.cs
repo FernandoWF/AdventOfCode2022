@@ -5,6 +5,8 @@ namespace Day14
 {
     internal class Part1 : ISolution
     {
+        public static readonly Point SandPouringOrigin = new(500, 0);
+
         public static void Run()
         {
             var lines = File.ReadAllLines("Input.txt");
@@ -12,13 +14,12 @@ namespace Day14
             var rocks = rockPaths.SelectMany(GetAllRocksFromPath).ToList();
             var occupiedPositions = new HashSet<Point>(rocks);
 
-            var sandPouringOrigin = new Point(500, 0);
             var pouredSandUnits = 0;
             Point? restPosition;
 
             do
             {
-                restPosition = MoveSand(sandPouringOrigin, occupiedPositions);
+                restPosition = MoveSand(SandPouringOrigin, occupiedPositions);
                 pouredSandUnits++;
             }
             while (restPosition != null);
@@ -27,7 +28,7 @@ namespace Day14
             Console.WriteLine(restedSandUnits);
         }
 
-        private static Point[] ParsePath(string line)
+        public static Point[] ParsePath(string line)
         {
             return line
                 .Split(" -> ")
@@ -42,7 +43,7 @@ namespace Day14
                 .ToArray();
         }
 
-        private static HashSet<Point> GetAllRocksFromPath(Point[] path)
+        public static HashSet<Point> GetAllRocksFromPath(Point[] path)
         {
             var rocks = new HashSet<Point>();
 
